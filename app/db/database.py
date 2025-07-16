@@ -1,23 +1,20 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from app.config import settings
+from ..config import settings
 
-# Usa la propiedad DATABASE_URL correctamente
+# Motor principal con Trusted Connection
 engine = create_engine(
-    settings.DATABASE_URL,  # Accede a la propiedad, no al método
+    settings.DB1_URL,
     pool_pre_ping=True,
-    connect_args={
-        "timeout": 30,
-        "autocommit": True
-    }
+    connect_args={}
 )
 
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine,
-    expire_on_commit=False
-)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

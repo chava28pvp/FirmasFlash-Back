@@ -1,34 +1,42 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.db.database import Base
 from app.config import settings
-from dotenv import load_dotenv
-
-
-load_dotenv('.env')
 
 
 @pytest.fixture(scope="session")
-def engine():
-    """Fixture para el motor de pruebas"""
-    test_db_url = f"{settings.DATABASE_URL}_test"
-    engine = create_engine(test_db_url)
-    Base.metadata.create_all(bind=engine)
+def db_engine():
+    """Fixture para el motor de base de datos"""
+    db_url = settings.DB1_URL if not hasattr(pytest, "testing_env") else settings.TEST_DB1_URL
+    engine = create_engine(db_url)
+
     yield engine
-    Base.metadata.drop_all(bind=engine)
+
     engine.dispose()
 
 
 @pytest.fixture
-def db_session(engine):
-    """Fixture para sesiones de prueba"""
-    connection = engine.connect()
-    transaction = connection.begin()
-    session = sessionmaker(bind=connection)()
+def db_session(db_engine):
+    """Fixture para sesiones de base de datos"""
+    Session = sessionmaker(bind=db_engine)
+    session = Session()
 
     yield session
 
+    session.rollback()
     session.close()
-    transaction.rollback()
-    connection.close()
+
+
+def pytest_configure(config):
+    """Configuración global de pytest"""
+    pytest.testing_env = config.getoption("--test-env")
+
+
+def pytest_addoption(parser):
+    """Añadir opción de línea de comandos"""
+    parser.addoption(
+        "--test-env",
+        action="store_true",
+        default=False,
+        help="Usar configuración de testing"
+    )
