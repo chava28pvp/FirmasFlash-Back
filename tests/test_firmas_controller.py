@@ -1,4 +1,4 @@
-from my_app import typeArchive
+from my_app.models.firmas import typeArchive
 
 
 def test_create_firma_endpoint(test_client, db_session):

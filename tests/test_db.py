@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import create_engine, text
-from my_app import settings
-from my_app import typeArchive
+from my_app.config import settings
+from my_app.models.firmas import typeArchive
 
 
 def test_connection(request):

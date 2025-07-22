@@ -1,6 +1,6 @@
-from my_app import create_firma_with_description
-from my_app import typeArchive
-from my_app import FirmasCreator
+from my_app.models.firmas import typeArchive
+from my_app.schemas.firmas_schemas import FirmasCreator
+from my_app.service.service_firmas import create_firma_with_description
 
 
 def test_create_firma_with_description(db_session):
@@ -22,3 +22,4 @@ def test_create_firma_with_description(db_session):
     assert result.name == "Firma Test"
     assert result.description == "Una firma de prueba"
     assert result.typeArchiveDescription == "PDF"
+

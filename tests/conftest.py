@@ -2,9 +2,9 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from my_app import Base, get_db
-from my_app import settings
-from my_app import app
+from my_app.db.database import Base, get_db
+from my_app.config import settings
+from my_app.main import app
 
 
 @pytest.fixture(scope="function")

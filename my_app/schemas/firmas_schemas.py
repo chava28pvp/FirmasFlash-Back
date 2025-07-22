@@ -11,3 +11,5 @@ class FirmasResponse(BaseModel):
     name: str
     description: str
     typeArchiveDescription: str
+
+
