@@ -15,7 +15,8 @@ class firmas(Base):
     type_archive_id = Column('TypeArchive_Id', Integer, ForeignKey('TypeArchivo.idTypeArchive'))
 
     type_archive = relationship("typeArchive", back_populates="firmas")
-    archive_urls = relationship("archiveURL", back_populates="firmas")
+    archive_urls = relationship("archiveURL", back_populates="firma")
+    users_asignados = relationship("usersAsignados", back_populates="firma")
 
 
 class archiveURL(Base):
@@ -36,7 +37,7 @@ class typeArchive(Base):
     creation_date = Column('CreationDate', DateTime, default=datetime.utcnow())
 
     # Relación inversa
-    firmas = relationship("firmas", back_populates="typeArchive")
+    firmas = relationship("firmas", back_populates="type_archive")
 
 
 class usersAsignados(Base):
@@ -46,5 +47,4 @@ class usersAsignados(Base):
     id_Firma = Column('IdFirma', Integer, ForeignKey('Firma.idFirma'))
     usuario = Column('Usuario', String)
 
-    firmas = relationship("firmas", back_populates="usersAsignados")
-
+    firma = relationship("firmas", back_populates="users_asignados")  # Matches firmas.users_asignados

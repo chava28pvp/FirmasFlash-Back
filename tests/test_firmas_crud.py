@@ -1,7 +1,7 @@
 
-from my_app.models.firmas import typeArchive, firmas
+from my_app.models.firmas import typeArchive
 from my_app.crud.firma_crud import create_firmas
-from my_app.schemas.firmas_schemas import FirmasCreator, FirmasResponse
+from my_app.schemas.firmas_schemas import FirmasCreator
 
 
 # $env:PYTHONPATH="."; pytest tests/unit/test_firmas_crud.py
