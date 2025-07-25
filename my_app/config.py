@@ -23,6 +23,21 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
+class AsyncSettings(BaseSettings):
+    DB1_URL: str = Field(..., description="Cadena de conexión para SQL Server")
+
+    # Configuración para testing (con valor por defecto)
+    TEST_DB1_URL: str = Field(
+        default="sqlite:///./test.db",
+        description="Cadena de conexión para testing"
+    )
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
+
 
 @lru_cache()
 def get_settings():

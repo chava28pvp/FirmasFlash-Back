@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from my_app.config import settings
@@ -21,3 +22,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
+

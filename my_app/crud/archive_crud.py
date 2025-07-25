@@ -3,7 +3,7 @@ from my_app.models.firmas import archiveURL
 from my_app.schemas.archive_schemas import archivecreate
 
 
-def create_firmas(db: Session, data: archivecreate):
+def create_archive(db: Session, data: archivecreate):
     new_archive = archiveURL(
         path_file=data.pathFile,
         firma_id=data.idFirma,
